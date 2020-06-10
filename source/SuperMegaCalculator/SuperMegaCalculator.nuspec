@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>SuperMegaCalculator</id>
+    <version>1.0.4</version>
+    <title>SuperMegaCalculator</title>
+    <authors>Ramazan Yilmaz</authors>
+    <owners>Ramazan Yilmaz</owners>
+    <description>Very fast and efficient library for calculations</description>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <dependencies>
+      <group targetFramework=".NETCoreApp3.1"/>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src=".\bin\Release\netcoreapp3.1\SuperMegaCalculator.*" target="lib\netcoreapp3.1"/>
+  </files>
+</package>

@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+  supermegacalculator:
+    image: ramoy/supermegacalculator:latest
+    container_name: "supermegacalculator"
+    environment:
+      TZ: "Europe/Zurich"
+    ports:
+      - 4711:80
