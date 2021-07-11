@@ -1,0 +1,30 @@
+﻿<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Runtime" #>
+<#@ assembly name="$(SolutionDir)SuperMegaCalculator\bin\$(Configuration)\netcoreapp3.1\SuperMegaCalculator.dll" #>
+<#@ import namespace="SuperMegaCalculator" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #><#+
+
+        private const int MAX_COUNT = 100;
+
+        private void GenerateCalculation()
+        {
+            for (var first = 0; first <= MAX_COUNT; first++)
+            {
+                for (var second = 0; second <= MAX_COUNT; second++)
+                {
+                    GenerateAddition(first, second);
+                    GenerateSubtraction(first, second);
+                    GenerateMultiplication(first, second);
+                    GenerateDivision(first, second);
+                }
+            }
+        }
+
+        private string GetClassName(int first, int second, Operator operatorEnum)
+        {
+            var className = $"{operatorEnum}{first}With{second}CalculationStrategy";
+            return className;
+        }
+#>

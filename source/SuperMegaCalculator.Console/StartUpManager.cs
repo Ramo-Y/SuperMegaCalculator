@@ -4,19 +4,32 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using SuperMegaCalculator.Interfaces;
+
     internal class StartUpManager
     {
-        private readonly List<string> _operatorItems;
+        private readonly ICalculator _calculator;
+
+        private readonly IDictionary<char, Operator> _operatorMapping;
 
         public StartUpManager()
         {
-            _operatorItems = new List<string>
-                                 {
-                                     "+",
-                                     "-",
-                                     "*",
-                                     "/"
-                                 };
+            _calculator = new Calculator();
+            _operatorMapping = new Dictionary<char, Operator>
+                                   {
+                                       {
+                                           'a', Operator.Addition
+                                       },
+                                       {
+                                           's', Operator.Subtraction
+                                       },
+                                       {
+                                           'm', Operator.Multiplication
+                                       },
+                                       {
+                                           'd', Operator.Division
+                                       }
+                                   };
         }
 
         internal void Start()
@@ -31,20 +44,29 @@
             Console.WriteLine("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             Console.WriteLine("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 
+            Calculate();
+        }
+
+        private void AskForNewCalculation()
+        {
             while (true)
             {
-                Calculate();
-                Console.WriteLine("Want a new calculation? ( y )");
-                var input = Console.ReadLine();
-                if (string.IsNullOrEmpty(input))
+                Console.WriteLine("Want a new calculation? ( y = yes | n = abort )");
+
+                var i = Console.ReadKey().KeyChar;
+                switch (i)
                 {
-                    return;
+                    case 'y':
+                        Calculate();
+                        break;
+                    case 'n':
+                        return;
+                    default:
+                        Console.WriteLine("Wrong input!");
+                        continue;
                 }
 
-                if (!input.Equals("y", StringComparison.OrdinalIgnoreCase))
-                {
-                    return;
-                }
+                break;
             }
         }
 
@@ -56,11 +78,30 @@
             var calculationOperator = GetOperator();
             var secondNumber = GetNumber("Write the second number");
 
-            var calculator = new Calculator();
-            var result = calculator.Calculate(firstNumber, secondNumber, calculationOperator);
-            Console.WriteLine();
-            Console.WriteLine($"Result is '{result}'");
-            Console.WriteLine();
+            try
+            {
+                var result = _calculator.Calculate(firstNumber, secondNumber, calculationOperator);
+                Console.WriteLine();
+                Console.WriteLine($"Result is '{result}'");
+                Console.WriteLine();
+            }
+            catch (DivideByZeroException exception)
+            {
+                ShowError(exception);
+            }
+            catch (ArgumentOutOfRangeException exception)
+            {
+                ShowError(exception);
+            }
+
+            AskForNewCalculation();
+        }
+
+        private static void ShowError(Exception exception)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine($"Error: {exception.Message}");
+            Console.ResetColor();
         }
 
         private int GetNumber(string outputText)
@@ -81,32 +122,22 @@
             return number;
         }
 
-        private string GetOperator()
+        private Operator GetOperator()
         {
-            var outputText = "Write an operator (";
-            var count = _operatorItems.Count - 1;
-            for (var i = 0; i <= count; i++)
-            {
-                outputText += $" {_operatorItems[i]} ";
-                if (i != count)
-                {
-                    outputText += "|";
-                }
-            }
-
-            outputText += ")";
-
             while (true)
             {
-                Console.WriteLine(outputText);
-                var calculationOperator = Console.ReadLine();
+                Console.WriteLine("Write an operator ( Addition (a) | Subtraction (s) | Multiplication (m) | Division (d) )");
+                var operatorChar = Console.ReadKey().KeyChar;
+                Console.WriteLine();
 
-                if (_operatorItems.Any(o => o == calculationOperator))
+                if (_operatorMapping.Keys.Any(o => o == operatorChar))
                 {
-                    return calculationOperator;
+                    var value = _operatorMapping.Single(o => o.Key == operatorChar).Value;
+                    Console.WriteLine($"Your input '{operatorChar}' matches to operator '{value}'");
+                    return value;
                 }
 
-                Console.WriteLine($"Your input '{calculationOperator}' is not correct!");
+                Console.WriteLine($"Your input '{operatorChar}' is not correct!");
             }
         }
     }

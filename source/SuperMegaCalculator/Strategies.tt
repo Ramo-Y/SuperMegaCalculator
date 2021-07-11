@@ -1,0 +1,19 @@
+﻿<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Runtime" #>
+<#@ output extension=".cs" #>
+<#@ include file="Generator\\StrategiesGenerator.ttinclude" #>
+<#@ assembly name="$(SolutionDir)SuperMegaCalculator\bin\Debug\netcoreapp3.1\SuperMegaCalculator.dll" #>
+namespace SuperMegaCalculator
+{
+    using System;
+
+    using SuperMegaCalculator.Interfaces;
+
+	// ReSharper disable All
+    public class Strategies
+    {
+<#
+    GenerateCalculation();
+#>
+    }
+}

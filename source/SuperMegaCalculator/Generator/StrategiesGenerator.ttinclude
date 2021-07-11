@@ -1,0 +1,83 @@
+﻿<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Runtime" #>
+<#@ assembly name="$(SolutionDir)SuperMegaCalculator\bin\$(Configuration)\netcoreapp3.1\SuperMegaCalculator.dll" #>
+<#@ import namespace="SuperMegaCalculator" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ include file="..\\Generator\\CommonGenerator.ttinclude" #>
+<#@ import namespace="System.Collections.Generic" #><#+
+        
+        private const string DIVIDE_BY_ZERO_EXCEPTION = "DivideByZeroException";
+        
+        private void GenerateAddition(int first, int second)
+        {
+            var result = first + second;
+            var s = GenerateCode(first, second, Operator.Addition, result.ToString());
+            WriteLine(s);
+        }
+
+        private void GenerateSubtraction(int first, int second)
+        {
+            var result = first - second;
+            var s = GenerateCode(first, second, Operator.Subtraction, result.ToString());
+            WriteLine(s);
+        }
+        
+        private void GenerateMultiplication(int first, int second)
+        {
+            var result = first * second;
+            var s = GenerateCode(first, second, Operator.Multiplication, result.ToString());
+            WriteLine(s);
+        }
+        
+        private void GenerateDivision(int first, int second)
+        {
+            string result;
+            if (second == 0)
+            {
+                result = DIVIDE_BY_ZERO_EXCEPTION;
+            }
+            else
+            {
+                var calculatedResult = (float)first / (float)second;
+                result = calculatedResult.ToString();
+            }
+            
+            var s = GenerateCode(first, second, Operator.Division, result);
+            WriteLine(s);
+        }
+        
+        private string GenerateCode(int first, int second, Operator operatorEnum, string result)
+        {
+            var stringBuilder = new StringBuilder();
+            var className = GetClassName(first, second, operatorEnum);
+            
+            stringBuilder.AppendLine($"        public sealed class {className} : ICalculationStrategy");
+            stringBuilder.AppendLine("        {");
+            stringBuilder.AppendLine($"            private static readonly Lazy<{className}> _lazy =");
+            stringBuilder.AppendLine($"                new Lazy<{className}>(() => new {className}());");
+            stringBuilder.AppendLine("");
+            stringBuilder.AppendLine($"            private {className}()");
+            stringBuilder.AppendLine("            {");
+            stringBuilder.AppendLine("            }");
+            stringBuilder.AppendLine("");
+            stringBuilder.AppendLine($"            public static {className} Instance => _lazy.Value;");
+            stringBuilder.AppendLine("");
+            stringBuilder.AppendLine("            public double GetCalculationResult()");
+            stringBuilder.AppendLine("            {");
+            if(result == DIVIDE_BY_ZERO_EXCEPTION)
+            {
+                stringBuilder.AppendLine("                throw new DivideByZeroException(\"Null division is not allowed!\");");
+            }
+            else
+            {
+            stringBuilder.AppendLine($"                return {result};");
+            }
+            stringBuilder.AppendLine("            }");
+            stringBuilder.AppendLine("        }");
+
+            var s = stringBuilder.ToString();
+
+            return s;
+        }
+#>
