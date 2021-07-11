@@ -4,11 +4,11 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Authors>Ramazan Yilmaz</Authors>
     <Company>Ramazan Yilmaz</Company>
-    <Version>1.0.4.0</Version>
+    <Version>2.0.0.0</Version>
     <PackageId>SuperMegaCalculator</PackageId>
     <Product>SuperMegaCalculator</Product>
-    <AssemblyVersion>1.0.4.0</AssemblyVersion>
-    <FileVersion>1.0.4.0</FileVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
