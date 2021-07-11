@@ -9,10 +9,10 @@
 
 Hii! This is a super modern and fast calculator!
 
-This is just a shitty implemented NuGet package (SuperMegaCalculator) and is just made as a first attempt with Blazor and for fun.
+This is a bad ~~shitty~~ implemented NuGet package (SuperMegaCalculator) and is just made as a first attempt with Blazor and for fun.
 
 ## What it does
-A webapplication which you can use to make basic calculations between 1-10 made with Blazor.
+A webapplication which you can use to make basic calculations between 1-100 made with Blazor.
 
 ## First look
 ![FirstLook](https://raw.githubusercontent.com/Ramo-Y/SuperMegaCalculator/master/SuperMegaCalculator.png)
@@ -33,3 +33,8 @@ services:
 ```
 
 Here is the docker image of this project: https://hub.docker.com/r/ramoy/supermegacalculator
+
+## Development
+You may have some problems loading ```System.Runtime``` in T4 script, have a look here to fix it:
+https://stackoverflow.com/questions/51550265/t4-template-could-not-load-file-or-assembly-system-runtime-version-4-2-0-0
+
