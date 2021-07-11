@@ -12,7 +12,7 @@ Hii! This is a super modern and fast calculator!
 This is a bad ~~shitty~~ implemented NuGet package (SuperMegaCalculator) and is just made as a first attempt with Blazor and for fun.
 
 ## What it does
-A webapplication which you can use to make basic calculations between 1-100 made with Blazor.
+A webapplication which you can use to make basic calculations between 0-100 made with Blazor.
 
 ## First look
 ![FirstLook](https://raw.githubusercontent.com/Ramo-Y/SuperMegaCalculator/master/SuperMegaCalculator.png)
