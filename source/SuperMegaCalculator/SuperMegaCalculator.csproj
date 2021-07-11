@@ -16,9 +16,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="Calculator.tt">
-      <LastGenOutput>Calculator.cs</LastGenOutput>
+    <None Include="Helper\StrategyHelper.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>StrategyHelper.tt</DependentUpon>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Helper\StrategyHelper.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>StrategyHelper.cs</LastGenOutput>
+    </None>
+    <None Update="Strategies.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Strategies.cs</LastGenOutput>
     </None>
   </ItemGroup>
 
@@ -27,10 +39,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Calculator.cs">
+    <Compile Update="Helper\StrategyHelper.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>Calculator.tt</DependentUpon>
+      <DependentUpon>StrategyHelper.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Strategies.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Strategies.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 

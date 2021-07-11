@@ -1,0 +1,48 @@
+﻿<#@ assembly name="System.Core" #>
+<#@ output extension=".cs" #>
+<#@ include file="..\\Generator\\StrategyHelper.ttinclude" #>
+namespace SuperMegaCalculator.Helper
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+
+    using SuperMegaCalculator;
+    using SuperMegaCalculator.Interfaces;
+
+	// ReSharper disable All
+    public static class StrategyHelper
+    {
+        private static readonly Lazy<IReadOnlyDictionary<string, ICalculationStrategy>> _strategiesCache =
+            new Lazy<IReadOnlyDictionary<string, ICalculationStrategy>>(CreateStrategies);
+
+        private static IReadOnlyDictionary<string, ICalculationStrategy> CreateStrategies()
+        {
+            var dictionary = new Dictionary<string, ICalculationStrategy>
+                                 {
+<#
+    GenerateCalculation();
+#>
+                                 };
+
+            return new ReadOnlyDictionary<string, ICalculationStrategy>(dictionary);
+        }
+        
+        /// <summary>
+        /// Find the matching strategy to the given calculation expression
+        /// </summary>
+        /// <param name="calculationExpression">A calculation expression with first number, operator and second number (e.g. 5*8)</param>
+        /// <returns>Matching strategy to get the result of the calculation</returns>
+        /// <exception cref="T:System.ArgumentOutOfRangeException">Throws an ArgumentOutOfRangeException if no strategy for calculation found</exception>
+        internal static ICalculationStrategy GetMatchingStrategy(string calculationExpression)
+        {
+            var hasStrategy = _strategiesCache.Value.TryGetValue(calculationExpression, out var strategy);
+            if (!hasStrategy)
+            {
+                throw new ArgumentOutOfRangeException($"No strategy for calculation of '{calculationExpression}' found!");
+            }
+
+            return strategy;
+        }
+    }
+}
