@@ -10,7 +10,7 @@
 
         public string Operator { get; set; }
 
-        public string ResultText { get; set; }
+        public double Result { get; set; }
 
         public string CalculationProcess { get; set; }
     }

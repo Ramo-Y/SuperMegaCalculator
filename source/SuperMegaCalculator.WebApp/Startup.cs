@@ -6,6 +6,8 @@ namespace SuperMegaCalculator.WebApp
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
 
+    using SuperMegaCalculator.Interfaces;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -21,7 +23,7 @@ namespace SuperMegaCalculator.WebApp
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<Calculator>();
+            services.AddSingleton<ICalculator, Calculator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
